@@ -1,5 +1,6 @@
 from flask import Flask,jsonify,request
 import ipl
+import iplapi
 
 app=Flask(__name__)
 
@@ -20,6 +21,22 @@ def teamvteam():
     response=ipl.teamVteamAPI(team1,team2)
     return jsonify(response)
 
-@app.route('')
+@app.route('/api/team-record')
+def team_record():
+    team_name=request.args.get('team')
+    response=iplapi.teamAPI(team_name)
+    return response
+
+@app.route('/api/batting-record')
+def batting_record():
+    batsman_name=request.args.get('batsman')
+    response=iplapi.batsmanAPI(batsman_name)
+    return response
+
+@app.route('/api/bowling-record')
+def bowling_record():
+    bowler_name=request.args.get('bowler')
+    response=iplapi.bowlerAPI(bowler_name)
+    return response
 
 app.run(debug=True)
